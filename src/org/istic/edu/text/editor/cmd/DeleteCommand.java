@@ -9,7 +9,7 @@ import org.istic.edu.text.editor.receiver.*;
  * @author Hafiz Mujadid Khalid
  * @version 1.0
  */
-public class DeleteCommand extends Command {
+public class DeleteCommand implements Command {
 	private EditorEngine engine;
 	public DeleteCommand(EditorEngine engine) {
 		this.engine = engine;

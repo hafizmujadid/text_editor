@@ -9,7 +9,7 @@ import org.istic.edu.text.editor.receiver.*;
  * @author Hafiz Mujadid Khalid
  * @version 1.0
  */
-public class CopyCommand extends Command {
+public class CopyCommand implements Command {
 	private EditorEngine engine;
 	
 	public CopyCommand(EditorEngine engine) {

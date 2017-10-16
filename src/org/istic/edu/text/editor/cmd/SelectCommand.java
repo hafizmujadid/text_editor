@@ -3,7 +3,7 @@ package org.istic.edu.text.editor.cmd;
 import org.istic.edu.text.editor.receiver.EditorEngine;
 import org.istic.edu.text.editor.receiver.Selection;
 
-public class SelectCommand extends Command {
+public class SelectCommand implements Command {
 
 	private EditorEngine engine;
 	private Selection selection;

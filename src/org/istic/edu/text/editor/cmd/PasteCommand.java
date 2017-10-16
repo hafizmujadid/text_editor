@@ -9,7 +9,7 @@ import org.istic.edu.text.editor.receiver.*;
  * @author Hafiz Mujadid Khalid
  * @version 1.0
  */
-public class PasteCommand extends Command {
+public class PasteCommand implements Command {
 
 	private EditorEngine engine;
 	public PasteCommand(EditorEngine engine) {

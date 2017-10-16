@@ -7,7 +7,7 @@ package org.istic.edu.text.editor.cmd;
  * @author Hafiz Mujadid Khalid
  * @version 1.0
  */
-public abstract class Command
+public interface Command
 {
 	/** 
 	 * Operation to execute commands

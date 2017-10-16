@@ -1,6 +1,6 @@
 package org.istic.edu.text.editor.cmd;
 
-public class Redo extends Command {
+public class Redo implements Command {
 
 	@Override
 	public void execute() {

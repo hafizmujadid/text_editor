@@ -2,7 +2,7 @@ package org.istic.edu.text.editor.cmd;
 
 import org.istic.edu.text.editor.receiver.*;
 
-public class InsertCommand extends Command {
+public class InsertCommand implements Command {
 	private EditorEngine engine;
 	private String substring;
 	

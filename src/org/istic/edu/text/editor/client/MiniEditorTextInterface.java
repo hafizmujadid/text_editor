@@ -16,7 +16,6 @@ public class MiniEditorTextInterface {
 
 	public static void main(String[] args) {
 		// Create Editor engine
-		EditorEngine engine = new EditorEngineStub();
 		Selection selection = null;
 
 		// commands to be done
@@ -25,7 +24,7 @@ public class MiniEditorTextInterface {
 		PasteCommand paste = null;
 		InsertCommand insert = null;
 		DeleteCommand delete = null;
-		CommandInvoker invoker= null;
+		CommandInvoker invoker= new CommandInvoker();
 		SelectCommand select= null;
 
 		String inputLine;
@@ -52,11 +51,12 @@ public class MiniEditorTextInterface {
 			case '0':
 				break;
 			case 'I': /* Insert */
-				insert= new InsertCommand(engine, inputLine.substring(2));
+				insert= new InsertCommand(editorEngine, inputLine.substring(2));
 				invoker.setCommand(insert);
 				invoker.storeAndExecute();
 				break;
 			case 'S': /* Select */
+				selection= new Selection();
 				String numberString = "";
 				try {
 					String[] arguments = inputLine.substring(2).split("\\s+");
@@ -66,7 +66,7 @@ public class MiniEditorTextInterface {
 					int stop = Integer.parseInt(numberString);
 					selection.setStart(start);
 					selection.setStop(stop);
-					select= new SelectCommand(engine, selection);
+					select= new SelectCommand(editorEngine, selection);
 					invoker.setCommand(select);
 					invoker.storeAndExecute();
 				} catch (Exception e) {
@@ -74,22 +74,22 @@ public class MiniEditorTextInterface {
 				}
 				break;
 			case 'C': /* Copy */
-				copy= new CopyCommand(engine);
+				copy= new CopyCommand(editorEngine);
 				invoker.setCommand(copy);
 				invoker.storeAndExecute();
 				break;
 			case 'X': /* cut */
-				cut= new CutCommand(engine);
+				cut= new CutCommand(editorEngine);
 				invoker.setCommand(cut);
 				invoker.storeAndExecute();
 				break;
 			case 'V': /* paste */
-				paste= new PasteCommand(engine);
+				paste= new PasteCommand(editorEngine);
 				invoker.setCommand(paste);
 				invoker.storeAndExecute();
 				break;
 			case 'D': /* Delete, i.e. insert empty string */
-				delete= new DeleteCommand(engine);
+				delete= new DeleteCommand(editorEngine);
 				invoker.setCommand(delete);
 				invoker.storeAndExecute();
 				break;

@@ -9,7 +9,7 @@ import org.istic.edu.text.editor.receiver.*;
  * @author Hafiz Mujadid Khalid
  * @version 1.0
  */
-public class CutCommand extends Command {
+public class CutCommand implements Command {
 
 	private EditorEngine engine;
 
