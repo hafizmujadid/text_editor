@@ -54,7 +54,7 @@ public class MiniEditorTextInterface {
 			case 'I': /* Insert */
 				insert= new InsertCommand(engine, inputLine.substring(2));
 				invoker.setCommand(insert);
-				invoker.executeCommand();
+				invoker.storeAndExecute();
 				break;
 			case 'S': /* Select */
 				String numberString = "";
@@ -68,7 +68,7 @@ public class MiniEditorTextInterface {
 					selection.setStop(stop);
 					select= new SelectCommand(engine, selection);
 					invoker.setCommand(select);
-					invoker.executeCommand();
+					invoker.storeAndExecute();
 				} catch (Exception e) {
 					System.out.println("Invalid number: " + numberString);
 				}
@@ -76,22 +76,22 @@ public class MiniEditorTextInterface {
 			case 'C': /* Copy */
 				copy= new CopyCommand(engine);
 				invoker.setCommand(copy);
-				invoker.executeCommand();
+				invoker.storeAndExecute();
 				break;
 			case 'X': /* cut */
 				cut= new CutCommand(engine);
 				invoker.setCommand(cut);
-				invoker.executeCommand();
+				invoker.storeAndExecute();
 				break;
 			case 'V': /* paste */
 				paste= new PasteCommand(engine);
 				invoker.setCommand(paste);
-				invoker.executeCommand();
+				invoker.storeAndExecute();
 				break;
 			case 'D': /* Delete, i.e. insert empty string */
 				delete= new DeleteCommand(engine);
 				invoker.setCommand(delete);
-				invoker.executeCommand();
+				invoker.storeAndExecute();
 				break;
 			case 'R': /* start Recording */
 				// Insert your code here (V2)

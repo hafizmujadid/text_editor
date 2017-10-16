@@ -2,8 +2,9 @@ package org.istic.edu.text.editor.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.istic.edu.text.editor.EditorEngine;
-import org.istic.edu.text.editor.EditorEngineStub;
+
+import org.istic.edu.text.editor.v1.EditorEngine;
+import org.istic.edu.text.editor.v1.EditorEngineStub;
 import org.junit.Before;
 import org.junit.Test;
 

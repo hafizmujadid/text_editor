@@ -5,8 +5,8 @@ package org.istic.edu.text.editor.test;
 
 import static org.junit.Assert.*;
 
-import org.istic.edu.text.editor.EditorBuffer;
-import org.istic.edu.text.editor.Selection;
+import org.istic.edu.text.editor.v1.EditorBuffer;
+import org.istic.edu.text.editor.v1.Selection;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

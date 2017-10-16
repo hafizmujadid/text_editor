@@ -6,7 +6,7 @@ package org.istic.edu.text.editor.test;
 
 import static org.junit.Assert.assertEquals;
 
-import org.istic.edu.text.editor.ClipBoard;
+import org.istic.edu.text.editor.v1.ClipBoard;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
