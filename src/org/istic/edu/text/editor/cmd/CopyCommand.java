@@ -2,7 +2,6 @@ package org.istic.edu.text.editor.cmd;
 
 import org.istic.edu.text.editor.receiver.*;
 
-
 /**
  * CopyCommand a concrete Command to copy text
  *
@@ -11,15 +10,15 @@ import org.istic.edu.text.editor.receiver.*;
  */
 public class CopyCommand implements Command {
 	private EditorEngine engine;
-	
+
 	public CopyCommand(EditorEngine engine) {
 		this.engine = engine;
 
 	}
+
 	@Override
 	public void execute() {
 		engine.editorCopy();
 
 	}
-
 }

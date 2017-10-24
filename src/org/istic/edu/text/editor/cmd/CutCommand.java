@@ -9,11 +9,14 @@ import org.istic.edu.text.editor.receiver.*;
  * @author Hafiz Mujadid Khalid
  * @version 1.0
  */
-public class CutCommand implements Command {
+public class CutCommand implements UndoRedoAbleCommand {
 
 	private EditorEngine engine;
-
+	private String previous;
+	private int caret;
 	public CutCommand(EditorEngine engine) {
+		previous=engine.getBuffer();
+		caret=engine.getCaret();
 		this.engine = engine;
 	}
 
@@ -22,5 +25,14 @@ public class CutCommand implements Command {
 		engine.editorCut();
 
 	}
-
+	@Override
+	public void undo() {
+		engine.setBuffer(previous);
+		engine.setCaret(caret);
+	}
+	@Override
+	public void redo() {
+		engine.editorCut();
+		
+	}
 }

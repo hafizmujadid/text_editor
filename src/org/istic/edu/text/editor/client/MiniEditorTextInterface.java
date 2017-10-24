@@ -12,7 +12,7 @@ public class MiniEditorTextInterface {
 	static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
 	// Direct reference to MiniEditor (for V1 only)
-	static EditorEngine editorEngine = new EditorEngineStub();
+	static EditorEngine editorEngine = new EditorEngineImpl();
 
 	public static void main(String[] args) {
 		// Create Editor engine
@@ -94,30 +94,34 @@ public class MiniEditorTextInterface {
 				invoker.storeAndExecute();
 				break;
 			case 'R': /* start Recording */
-				// Insert your code here (V2)
+				invoker.startRecording();
 				break;
 			case 'E': /* End recording */
-				// Insert your code here (V2)
+				invoker.stopRecording();
 				break;
 			case 'P': /* Play recording */
-				// Insert your code here (V2)
+				invoker.playRecording();
 				break;
 			case 'Z': /* undo */
-				// Insert your code here (V3)
+				invoker.undo();
 				break;
 			case 'Y': /* redo */
-				// Insert your code here (V3)
+				invoker.redo();
 				break;
 			default:
 				System.out.println("Unrecognized command, please try again:");
 				break;
 			}
 			System.out.println("-----------------------------------------------------");
-			System.out.println("[" + editorEngine.getBuffer() + "]");
+			System.out.println("Buffer [" + editorEngine.getBuffer() + "]");
 			System.out.println("-----------------------------------------------------");
-			System.out.println("[" + editorEngine.getSelection() + "]");
+			System.out.println("Selection [" + editorEngine.getSelection() + "]");
 			System.out.println("-----------------------------------------------------");
-			System.out.println("[" + editorEngine.getClipboard() + "]");
+			System.out.println("ClipBoard[" + editorEngine.getClipboard() + "]");
+			System.out.println("-----------------------------------------------------");
+			/*System.out.println("Caret[" + editorEngine.getCaret() + "]");
+			System.out.println("-----------------------------------------------------");
+			System.out.println("Selection Indices " + editorEngine.getSelectionIndices());*/
 			System.out.println("-----------------------------------------------------");
 
 			System.out.println("Enter command (I/S/C/X/V/D/R/E/P/Z/Y/Q) > ");

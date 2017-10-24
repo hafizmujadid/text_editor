@@ -9,10 +9,14 @@ import org.istic.edu.text.editor.receiver.*;
  * @author Hafiz Mujadid Khalid
  * @version 1.0
  */
-public class PasteCommand implements Command {
-
+public class PasteCommand implements UndoRedoAbleCommand {
 	private EditorEngine engine;
+	private String previous;
+	private int caret;
+	
 	public PasteCommand(EditorEngine engine) {
+		previous=engine.getBuffer();
+		caret=engine.getCaret();
 		this.engine = engine;
 	}
 	@Override
@@ -20,5 +24,14 @@ public class PasteCommand implements Command {
 		engine.editorPaste();
 
 	}
-
+	@Override
+	public void undo() {
+		engine.setBuffer(previous);
+		engine.setCaret(caret);
+		
+	}
+	@Override
+	public void redo() {
+		engine.editorPaste();
+	}
 }

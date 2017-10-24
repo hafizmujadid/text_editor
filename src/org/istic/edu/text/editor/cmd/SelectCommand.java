@@ -12,10 +12,9 @@ public class SelectCommand implements Command {
 		this.engine = engine;
 		this.selection = selection;
 	}
-	
+
 	@Override
 	public void execute() {
 		engine.editorSelect(selection.getStart(), selection.getStop());
 	}
-
 }
