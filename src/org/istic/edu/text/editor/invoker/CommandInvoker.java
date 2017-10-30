@@ -5,59 +5,88 @@ import java.util.List;
 import java.util.Stack;
 
 import org.istic.edu.text.editor.cmd.Command;
-import org.istic.edu.text.editor.cmd.UndoRedoAbleCommand;
+import org.istic.edu.text.editor.memento.EditorMemento;
+import org.istic.edu.text.editor.receiver.EditorEngine;
 
 public class CommandInvoker {
-	private Stack<UndoRedoAbleCommand> undoCommands;
-	private Stack<UndoRedoAbleCommand> redoCommands;
+
+	// list of commands that can be undone
+	private Stack<EditorMemento> undoables;
+
+	// list of commands that can be redone
+	private Stack<EditorMemento> redoables;
+
+	// current memento
+	private EditorMemento currentMemento;
+
+	// editor engine
+	private EditorEngine engine;
+
+	// list to keep recording of commands
 	private List<Command> commandsList;
+
+	// current command to be executed
 	private Command command;
+
+	// check if recording is turned on.
 	private boolean recording;
+
+	public CommandInvoker(EditorEngine engine) {
+		this.engine = engine;
+		this.undoables = new Stack<EditorMemento>();
+		this.redoables = new Stack<EditorMemento>();
+		commandsList = new ArrayList<Command>();
+		this.currentMemento = this.engine.getState();
+		this.recording = false;
+	}
 
 	public void setCommand(Command command) {
 		this.command = command;
-		undoCommands = new Stack<UndoRedoAbleCommand>();
-		redoCommands = new Stack<UndoRedoAbleCommand>();
-		commandsList = new ArrayList<Command>();
-		this.recording = false;
-		redoCommands.clear();
+		redoables.clear();
 	}
 
 	public void storeAndExecute() {
-		redoCommands.clear(); //clear the redo because new command is issued
+		redoables.clear(); // clear it because we need not to undo anything now
+
+		// save engine
+		saveEngine();
+		// execute command
 		command.execute();
-
-		if (command instanceof UndoRedoAbleCommand) {
-			UndoRedoAbleCommand undoredoCommand = (UndoRedoAbleCommand) command;
-			undoCommands.push(undoredoCommand);
-		}
-
-		if (recording)
+		if (recording) {
+			System.out.println("recorded");
 			commandsList.add(command);
+		}
 	}
 
 	public void undo() {
-		if (undoCommands.size() <= 0) {
-			return;
+		// do we have something to undo?
+		if (!this.undoables.isEmpty()) {
+			System.out.println("undoing ");
+			if (this.redoables.isEmpty()) {
+				this.redoables.push(this.engine.getState());
+			}
+			this.engine.setState(this.currentMemento);
+			this.redoables.push(this.currentMemento);
+			this.currentMemento = this.undoables.pop();
 		}
-		undoCommands.peek().undo(); // undo most recently executed command
-		redoCommands.push(undoCommands.peek()); // add undone command to undo
-												// stack
-		undoCommands.pop();
 	}
 
 	public void redo() {
-		if (redoCommands.size() <= 0) {
-			return;
+		if (this.redoables.size() > 1) {
+			this.undoables.push(this.currentMemento);
+			this.currentMemento = this.redoables.pop();
+			this.engine.setState(this.redoables.peek());
 		}
+	}
 
-		redoCommands.peek().redo(); // redo most recently executed command
-		undoCommands.push(redoCommands.peek()); // add undone command to redo
-												// stack
-		redoCommands.pop();
+	public void saveEngine() {
+		this.undoables.push(this.currentMemento);
+		this.currentMemento = this.engine.getState();
+		this.redoables.clear();
 	}
 
 	public void playRecording() {
+		System.out.println("replaying " + commandsList.size() + " commands");
 		recording = false;
 		for (int i = 0; i < commandsList.size(); i++) {
 			this.command = commandsList.get(i);
@@ -73,5 +102,4 @@ public class CommandInvoker {
 	public void stopRecording() {
 		recording = false;
 	}
-
 }

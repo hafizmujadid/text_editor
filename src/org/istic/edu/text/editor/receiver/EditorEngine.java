@@ -1,5 +1,8 @@
 package org.istic.edu.text.editor.receiver;
 
+import org.istic.edu.text.editor.memento.EditorMemento;
+
+
 public interface EditorEngine
 {
 	public String getBuffer();
@@ -15,4 +18,6 @@ public interface EditorEngine
 	public void setCaret(int caret);
 	public void setBuffer(String text);
 	public Selection getSelectionIndices();
+	public void setState(EditorMemento memento);
+	public EditorMemento getState();
 }

@@ -1,5 +1,8 @@
 package org.istic.edu.text.editor.receiver;
 
+import org.istic.edu.text.editor.memento.EditorMemento;
+
+
 public class EditorEngineImpl implements EditorEngine {
 
 	private EditorBuffer buffer;
@@ -89,5 +92,29 @@ public class EditorEngineImpl implements EditorEngine {
 	@Override
 	public void editorDelete() {
 		buffer.delete(selection);
+	}
+	
+	public void setState(EditorMemento memento) {
+		this.buffer.setBuffer(memento.getBuffer().getBuffer());
+		this.clipboard.setClipboard(memento.getClipboard().getClipboard());
+		this.selection.setStart(memento.getSelection().getStart());
+		this.selection.setStop(memento.getSelection().getStop());
+	}
+
+
+	public EditorMemento getState() {
+		EditorMemento memento = new EditorMemento();
+		EditorBuffer copyBuffer = new EditorBuffer();
+		copyBuffer.setBuffer(new StringBuffer(this.buffer.getBuffer().toString()));
+		ClipBoard copyClipboard = new ClipBoard(); 
+		copyClipboard.setClipboard(this.clipboard.getClipboard());
+		memento.setBuffer(copyBuffer);
+		memento.setClipboard(copyClipboard);
+		memento.setCursor(getCaret());
+		Selection copySelection= new Selection();
+		copySelection.setStart(this.selection.getStart());
+		copySelection.setStop(this.selection.getStop());
+		memento.setSelection(copySelection);
+		return memento;
 	}
 }

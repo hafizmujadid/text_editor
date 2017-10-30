@@ -24,7 +24,7 @@ public class MiniEditorTextInterface {
 		PasteCommand paste = null;
 		InsertCommand insert = null;
 		DeleteCommand delete = null;
-		CommandInvoker invoker= new CommandInvoker();
+		CommandInvoker invoker= new CommandInvoker(editorEngine);
 		SelectCommand select= null;
 
 		String inputLine;
@@ -112,17 +112,17 @@ public class MiniEditorTextInterface {
 				System.out.println("Unrecognized command, please try again:");
 				break;
 			}
-			System.out.println("-----------------------------------------------------");
+			/*System.out.println("-----------------------------------------------------");
 			System.out.println("Buffer [" + editorEngine.getBuffer() + "]");
 			System.out.println("-----------------------------------------------------");
 			System.out.println("Selection [" + editorEngine.getSelection() + "]");
 			System.out.println("-----------------------------------------------------");
 			System.out.println("ClipBoard[" + editorEngine.getClipboard() + "]");
 			System.out.println("-----------------------------------------------------");
-			/*System.out.println("Caret[" + editorEngine.getCaret() + "]");
+			System.out.println("Caret[" + editorEngine.getCaret() + "]");
 			System.out.println("-----------------------------------------------------");
-			System.out.println("Selection Indices " + editorEngine.getSelectionIndices());*/
-			System.out.println("-----------------------------------------------------");
+			System.out.println("Selection Indices " + editorEngine.getSelectionIndices());
+			System.out.println("-----------------------------------------------------");*/
 
 			System.out.println("Enter command (I/S/C/X/V/D/R/E/P/Z/Y/Q) > ");
 			try {
@@ -138,5 +138,6 @@ public class MiniEditorTextInterface {
 			}
 		}
 		System.out.println("Goodbye");
+		System.out.println("Buffer [" + editorEngine.getBuffer() + "]");
 	}
 }
