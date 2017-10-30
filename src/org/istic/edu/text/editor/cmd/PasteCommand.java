@@ -13,10 +13,15 @@ public class PasteCommand implements UndoRedoAbleCommand {
 	private EditorEngine engine;
 	private String previous;
 	private int caret;
+	private int start;
+	private int stop;
 	
 	public PasteCommand(EditorEngine engine) {
 		previous=engine.getBuffer();
 		caret=engine.getCaret();
+		Selection selection= engine.getSelectionIndices();
+		this.start=selection.getStart();
+		this.stop=selection.getStop();
 		this.engine = engine;
 	}
 	@Override
@@ -28,6 +33,7 @@ public class PasteCommand implements UndoRedoAbleCommand {
 	public void undo() {
 		engine.setBuffer(previous);
 		engine.setCaret(caret);
+		engine.editorSelect(start, stop);
 		
 	}
 	@Override
