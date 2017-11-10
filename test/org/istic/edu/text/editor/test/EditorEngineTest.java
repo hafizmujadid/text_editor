@@ -3,8 +3,9 @@ package org.istic.edu.text.editor.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.istic.edu.text.editor.v1.EditorEngine;
-import org.istic.edu.text.editor.v1.EditorEngineStub;
+import org.istic.edu.text.editor.memento.EditorMemento;
+import org.istic.edu.text.editor.receiver.EditorEngine;
+import org.istic.edu.text.editor.receiver.EditorEngineImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ public class EditorEngineTest {
 
 	@Before
 	public void setUp() throws Exception {
-		edit = new EditorEngineStub();
+		edit = new EditorEngineImpl();
 	}
 
 	@Test
@@ -65,6 +66,17 @@ public class EditorEngineTest {
 	}
 
 	@Test
+	public void testEditorDelete() {
+		assertTrue("Buffer should be empty", edit.getBuffer().isEmpty());
+		String myString = "Hello everybody123456";
+		edit.editorInsert(myString);
+		assertEquals("Buffer should be equal to inserted text", myString, edit.getBuffer());
+		edit.editorSelect(15, 21);
+		edit.editorDelete();
+		assertEquals("Buffer should be equal to Hello everybody", "Hello everybody", edit.getBuffer().toString());
+	}
+
+	@Test
 	public void testEditorPaste() {
 		assertTrue("Buffer should be empty", edit.getBuffer().isEmpty());
 		String myString = "Hello everybody123456";
@@ -83,6 +95,34 @@ public class EditorEngineTest {
 
 	private void invariant(EditorEngine edit) {
 		assertTrue("Selection not bigger than buffer", edit.getSelection().length() <= edit.getBuffer().length());
+	}
+
+	@Test
+	public void getStateTest() {
+		assertTrue("Buffer should be empty", edit.getBuffer().isEmpty());
+		String myString = "Hello everybody123456";
+		edit.editorInsert(myString);
+		assertEquals("Buffer should be equal to inserted text", myString, edit.getBuffer());
+		EditorMemento memento = edit.getState();
+
+		assertEquals("memento state should be equal to current state", memento.getBuffer().getBuffer().toString(),
+				edit.getBuffer().toString());
+	}
+
+	@Test
+	public void setOldStateTest() {
+		//check initially buffer is empty
+		assertTrue("Buffer should be empty", edit.getBuffer().isEmpty());
+		String myString = "Hello everybody123456";
+		edit.editorInsert(myString);
+		assertEquals("Buffer should be equal to inserted text", myString, edit.getBuffer());
+		EditorMemento memento = edit.getState();
+		edit.editorInsert("789");
+		assertEquals("Buffer should be changed to Hello everybody123456789", "Hello everybody123456789",
+				edit.getBuffer());
+		edit.setState(memento);
+		assertEquals("Buffer should be equal to Hello everybody123456", memento.getBuffer().getBuffer().toString(),
+				edit.getBuffer().toString());
 	}
 
 }

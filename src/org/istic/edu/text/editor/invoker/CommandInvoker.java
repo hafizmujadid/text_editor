@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 import org.istic.edu.text.editor.cmd.Command;
+import org.istic.edu.text.editor.cmd.UndoRedoAbleCommand;
 import org.istic.edu.text.editor.memento.EditorMemento;
 import org.istic.edu.text.editor.receiver.EditorEngine;
 
@@ -80,8 +81,11 @@ public class CommandInvoker {
 	}
 
 	public void saveEngine() {
-		this.undoables.push(this.currentMemento);
-		this.currentMemento = this.engine.getState();
+		//save state only if it is undoable command
+		if (command instanceof UndoRedoAbleCommand) {
+			this.undoables.push(this.currentMemento);
+			this.currentMemento = this.engine.getState();
+		}
 		this.redoables.clear();
 	}
 

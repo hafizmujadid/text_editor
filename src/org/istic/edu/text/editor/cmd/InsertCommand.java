@@ -15,15 +15,4 @@ public class InsertCommand implements UndoRedoAbleCommand {
 		System.out.println("inserting "+substring);
 		engine.editorInsert(substring);
 	}
-	@Override
-	public void undo() {
-		/*engine.setBuffer(previous);
-		engine.setCaret(caret);
-		engine.editorSelect(start, stop);*/
-		
-	}
-	@Override
-	public void redo() {
-		//engine.editorInsert(substring);
-	}
 }
