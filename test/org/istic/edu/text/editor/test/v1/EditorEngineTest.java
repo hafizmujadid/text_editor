@@ -12,7 +12,7 @@ public class EditorEngineTest {
 
 	@Before
 	public void setUp() throws Exception {
-		edit = new EditorEngineStub();
+		edit = new EditorEngineImpl();
 	}
 
 	@Test

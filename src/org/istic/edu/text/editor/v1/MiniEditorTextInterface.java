@@ -16,7 +16,7 @@ public class MiniEditorTextInterface
 
 	/** The editor engine. */
 	// Direct reference to MiniEditor (for V1 only)
-	static EditorEngine editorEngine = new EditorEngineStub() ;
+	static EditorEngine editorEngine = new EditorEngineImpl() ;
 
 	/**
 	 * The main method.

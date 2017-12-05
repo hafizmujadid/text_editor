@@ -4,7 +4,7 @@ package org.istic.edu.text.editor.v1;
  * The Class EditorEngineStub.
  * @author mujadid
  */
-public class EditorEngineStub implements EditorEngine {
+public class EditorEngineImpl implements EditorEngine {
 
 	/**  The buffer the instance of EditorBuffer class. */
 	private EditorBuffer buffer;
@@ -18,7 +18,7 @@ public class EditorEngineStub implements EditorEngine {
 	/**
 	 * Instantiates a new editor engine stub.
 	 */
-	public EditorEngineStub() {
+	public EditorEngineImpl() {
 		super();
 		buffer = new EditorBuffer();
 		selection = new Selection();
