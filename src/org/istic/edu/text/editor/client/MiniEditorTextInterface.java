@@ -8,12 +8,24 @@ import org.istic.edu.text.editor.cmd.*;
 import org.istic.edu.text.editor.invoker.CommandInvoker;
 import org.istic.edu.text.editor.receiver.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MiniEditorTextInterface.
+ */
 public class MiniEditorTextInterface {
+	
+	/** The keyboard. */
 	static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
+	/** The editor engine. */
 	// Direct reference to MiniEditor (for V1 only)
 	static EditorEngine editorEngine = new EditorEngineImpl();
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// Create Editor engine
 		Selection selection = null;

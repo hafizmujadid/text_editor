@@ -4,13 +4,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MiniEditorTextInterface.
+ */
 public class MiniEditorTextInterface
 {
+	
+	/** The keyboard. */
 	static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
+	/** The editor engine. */
 	// Direct reference to MiniEditor (for V1 only)
 	static EditorEngine editorEngine = new EditorEngineStub() ;
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args)
 	{
 		String inputLine;
@@ -70,7 +82,7 @@ public class MiniEditorTextInterface
 					editorEngine.editorPaste();
 					break;
 				case 'D': /* Delete, i.e. insert empty string */
-					editorEngine.editorInsert("");
+					editorEngine.editorDelete();
 					break;
 				case 'R': /* start Recording */
 					// Insert your code here (V2)
