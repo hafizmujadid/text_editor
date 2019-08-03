@@ -3,35 +3,33 @@ package org.istic.edu.text.editor.cmd;
 import org.istic.edu.text.editor.receiver.*;
 
 
+// TODO: Auto-generated Javadoc
 /**
- * PasteCommand a concrete Command to copy text
+ * PasteCommand a concrete Command to copy text.
  *
  * @author Hafiz Mujadid Khalid
  * @version 1.0
  */
 public class PasteCommand implements UndoRedoAbleCommand {
-	private EditorEngine engine;
-	private String previous;
-	private int caret;
 	
+	/** The engine. */
+	private EditorEngine engine;
+	
+	/**
+	 * Instantiates a new paste command.
+	 *
+	 * @param engine the engine
+	 */
 	public PasteCommand(EditorEngine engine) {
-		previous=engine.getBuffer();
-		caret=engine.getCaret();
 		this.engine = engine;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.istic.edu.text.editor.cmd.Command#execute()
+	 */
 	@Override
 	public void execute() {
 		engine.editorPaste();
 
-	}
-	@Override
-	public void undo() {
-		engine.setBuffer(previous);
-		engine.setCaret(caret);
-		
-	}
-	@Override
-	public void redo() {
-		engine.editorPaste();
 	}
 }

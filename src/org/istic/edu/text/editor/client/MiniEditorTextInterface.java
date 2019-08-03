@@ -8,12 +8,24 @@ import org.istic.edu.text.editor.cmd.*;
 import org.istic.edu.text.editor.invoker.CommandInvoker;
 import org.istic.edu.text.editor.receiver.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MiniEditorTextInterface.
+ */
 public class MiniEditorTextInterface {
+	
+	/** The keyboard. */
 	static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
+	/** The editor engine. */
 	// Direct reference to MiniEditor (for V1 only)
 	static EditorEngine editorEngine = new EditorEngineImpl();
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// Create Editor engine
 		Selection selection = null;
@@ -24,7 +36,7 @@ public class MiniEditorTextInterface {
 		PasteCommand paste = null;
 		InsertCommand insert = null;
 		DeleteCommand delete = null;
-		CommandInvoker invoker= new CommandInvoker();
+		CommandInvoker invoker= new CommandInvoker(editorEngine);
 		SelectCommand select= null;
 
 		String inputLine;
@@ -115,13 +127,13 @@ public class MiniEditorTextInterface {
 			System.out.println("-----------------------------------------------------");
 			System.out.println("Buffer [" + editorEngine.getBuffer() + "]");
 			System.out.println("-----------------------------------------------------");
-			System.out.println("Selection [" + editorEngine.getSelection() + "]");
+			/*System.out.println("Selection [" + editorEngine.getSelection() + "]");
 			System.out.println("-----------------------------------------------------");
 			System.out.println("ClipBoard[" + editorEngine.getClipboard() + "]");
+			System.out.println("-----------------------------------------------------");*/
+			System.out.println("Caret[" + editorEngine.getCaret() + "]");
 			System.out.println("-----------------------------------------------------");
-			/*System.out.println("Caret[" + editorEngine.getCaret() + "]");
-			System.out.println("-----------------------------------------------------");
-			System.out.println("Selection Indices " + editorEngine.getSelectionIndices());*/
+			System.out.println("Selection Indices " + editorEngine.getSelectionIndices());
 			System.out.println("-----------------------------------------------------");
 
 			System.out.println("Enter command (I/S/C/X/V/D/R/E/P/Z/Y/Q) > ");
@@ -138,5 +150,6 @@ public class MiniEditorTextInterface {
 			}
 		}
 		System.out.println("Goodbye");
+		System.out.println("Buffer [" + editorEngine.getBuffer() + "]");
 	}
 }

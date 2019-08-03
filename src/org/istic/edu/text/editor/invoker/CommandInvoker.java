@@ -6,57 +6,123 @@ import java.util.Stack;
 
 import org.istic.edu.text.editor.cmd.Command;
 import org.istic.edu.text.editor.cmd.UndoRedoAbleCommand;
+import org.istic.edu.text.editor.memento.EditorMemento;
+import org.istic.edu.text.editor.receiver.EditorEngine;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CommandInvoker.
+ */
 public class CommandInvoker {
-	private Stack<UndoRedoAbleCommand> undoCommands;
-	private Stack<UndoRedoAbleCommand> redoCommands;
+
+	/** The undoables. */
+	// list of commands that can be undone
+	private Stack<EditorMemento> undoables;
+
+	/** The redoables. */
+	// list of commands that can be redone
+	private Stack<EditorMemento> redoables;
+
+	/** The current memento. */
+	// current memento
+	private EditorMemento currentMemento;
+
+	/** The engine. */
+	// editor engine
+	private EditorEngine engine;
+
+	/** The commands list. */
+	// list to keep recording of commands
 	private List<Command> commandsList;
+
+	/** The command. */
+	// current command to be executed
 	private Command command;
+
+	/** The recording. */
+	// check if recording is turned on.
 	private boolean recording;
 
+	/**
+	 * Instantiates a new command invoker.
+	 *
+	 * @param engine the engine
+	 */
+	public CommandInvoker(EditorEngine engine) {
+		this.engine = engine;
+		this.undoables = new Stack<EditorMemento>();
+		this.redoables = new Stack<EditorMemento>();
+		commandsList = new ArrayList<Command>();
+		this.currentMemento = this.engine.getState();
+		this.recording = false;
+	}
+
+	/**
+	 * Sets the command.
+	 *
+	 * @param command the new command
+	 */
 	public void setCommand(Command command) {
 		this.command = command;
-		undoCommands = new Stack<UndoRedoAbleCommand>();
-		redoCommands = new Stack<UndoRedoAbleCommand>();
-		commandsList = new ArrayList<Command>();
-		this.recording = false;
-		redoCommands.clear();
+		redoables.clear();
 	}
 
+	/**
+	 * Store and execute.
+	 */
 	public void storeAndExecute() {
-		redoCommands.clear(); //clear the redo because new command is issued
+		redoables.clear(); // clear it because we need not to undo anything now
+
+		// save engine
+		saveEngine();
+		// execute command
 		command.execute();
-
-		if (command instanceof UndoRedoAbleCommand) {
-			UndoRedoAbleCommand undoredoCommand = (UndoRedoAbleCommand) command;
-			undoCommands.push(undoredoCommand);
-		}
-
-		if (recording)
+		if (recording) {
 			commandsList.add(command);
+		}
 	}
 
+	/**
+	 * Undo.
+	 */
 	public void undo() {
-		if (undoCommands.size() <= 0) {
-			return;
+		// do we have something to undo?
+		if (!this.undoables.isEmpty()) {
+			if (this.redoables.isEmpty()) {
+				this.redoables.push(this.engine.getState());
+			}
+			this.engine.setState(this.currentMemento);
+			this.redoables.push(this.currentMemento);
+			this.currentMemento = this.undoables.pop();
 		}
-		undoCommands.peek().undo(); // undo most recently executed command
-		redoCommands.push(undoCommands.peek()); // add undone command to undo
-												// stack
-		undoCommands.pop();
 	}
 
+	/**
+	 * Redo.
+	 */
 	public void redo() {
-		if (redoCommands.size() <= 0) {
-			return;
+		if (this.redoables.size() > 1) {
+			this.undoables.push(this.currentMemento);
+			this.currentMemento = this.redoables.pop();
+			this.engine.setState(this.redoables.peek());
 		}
-
-		redoCommands.peek().redo(); // redo most recently executed command
-		undoCommands.push(redoCommands.peek()); // add undone command to redo
-												// stack
-		redoCommands.pop();
 	}
 
+	/**
+	 * Save engine.
+	 */
+	public void saveEngine() {
+		//save state only if it is undoable command
+		if (command instanceof UndoRedoAbleCommand) {
+			this.undoables.push(this.currentMemento);
+			this.currentMemento = this.engine.getState();
+		}
+		this.redoables.clear();
+	}
+
+	/**
+	 * Play recording.
+	 */
 	public void playRecording() {
 		recording = false;
 		for (int i = 0; i < commandsList.size(); i++) {
@@ -65,13 +131,18 @@ public class CommandInvoker {
 		}
 	}
 
+	/**
+	 * Start recording.
+	 */
 	public void startRecording() {
 		commandsList.clear();
 		recording = true;
 	}
 
+	/**
+	 * Stop recording.
+	 */
 	public void stopRecording() {
 		recording = false;
 	}
-
 }

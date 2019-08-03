@@ -1,0 +1,8 @@
+org.istic.edu.text.editor.client
+org.istic.edu.text.editor.cmd
+org.istic.edu.text.editor.invoker
+org.istic.edu.text.editor.memento
+org.istic.edu.text.editor.receiver
+org.istic.edu.text.editor.test.v1
+org.istic.edu.text.editor.test.v3
+org.istic.edu.text.editor.v1

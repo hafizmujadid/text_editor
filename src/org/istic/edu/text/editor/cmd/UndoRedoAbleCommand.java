@@ -1,6 +1,8 @@
 package org.istic.edu.text.editor.cmd;
 
+/**
+ * The Interface UndoRedoAbleCommand.
+ */
 public interface UndoRedoAbleCommand extends Command{
-	public abstract void undo();
-    public abstract void redo();
+	
 }
